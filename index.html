@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>正切工作室 | Tangent Studio</title>
   <meta name="description" content="正切工作室 - 专注AI技术与创新解决方案">
-  <link rel="icon" type="image/x-icon" href="icon.ico">
-  <link rel="icon" type="image/jpeg" href="icon.jpg">
+  <link rel="icon" type="image/x-icon" href="/icon.ico">
+  <link rel="icon" type="image/jpeg" href="/icon.jpg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -72,7 +72,7 @@
   <nav class="fixed top-0 w-full z-50 glass border-b border-gray-200/50 dark:border-gray-800/50">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2">
-        <img src="icon.jpg" alt="正切工作室" class="w-8 h-8 rounded-lg object-cover">
+        <img src="/icon.jpg" alt="正切工作室" class="w-8 h-8 rounded-lg object-cover">
         <span class="font-semibold text-lg" data-i18n="brand">正切工作室</span>
       </a>
 
@@ -110,7 +110,7 @@
   <section class="relative min-h-screen flex items-center justify-center pt-16 hero-gradient">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <div class="float-animation mb-8">
-        <img src="icon.jpg" alt="正切工作室" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl shadow-primary-500/25 object-cover">
+        <img src="/icon.jpg" alt="正切工作室" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl shadow-primary-500/25 object-cover">
       </div>
 
       <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
@@ -471,6 +471,56 @@
       }
     }
 
+    // 解析 INI 文件内容
+    function parseINI(content) {
+      const sections = [];
+      let currentSection = null;
+
+      content.split('\n').forEach(line => {
+        line = line.trim();
+        if (!line || line.startsWith('#')) return;
+
+        // 匹配节标题 [Section Name]
+        const sectionMatch = line.match(/^\[(.+)\]$/);
+        if (sectionMatch) {
+          if (currentSection) {
+            sections.push(currentSection);
+          }
+          currentSection = {
+            name: sectionMatch[1],
+            num: 0,
+            content: ''
+          };
+          return;
+        }
+
+        // 匹配键值对
+        const kvMatch = line.match(/^(\w+)\s*=\s*(.+)$/);
+        if (kvMatch && currentSection) {
+          const key = kvMatch[1].toLowerCase();
+          let value = kvMatch[2].trim();
+
+          // 处理续行符
+          if (value.endsWith('\\')) {
+            value = value.slice(0, -1).trim();
+          }
+
+          if (key === 'num') {
+            currentSection.num = parseInt(value) || 0;
+          } else if (key === 'content' || key === 'cotent') {
+            // 处理 INI 中的续行
+            currentSection.content += (currentSection.content ? ' ' : '') + value;
+          }
+        }
+      });
+
+      if (currentSection) {
+        sections.push(currentSection);
+      }
+
+      return sections;
+    }
+
     // 加载文章
     async function loadArticles() {
       const container = document.getElementById('articlesContainer');
@@ -489,17 +539,18 @@
       `;
 
       try {
-        // 根据当前语言选择 API
-        const apiUrl = currentLang === 'zh' ? '/api/articles' : '/api/articles/en';
-        const response = await fetch(apiUrl);
+        // 根据当前语言选择 INI 文件
+        const iniFile = currentLang === 'zh' ? '/article.ini' : '/article_i8n.ini';
+        const response = await fetch(iniFile);
 
         if (!response.ok) {
           throw new Error('Failed to load articles');
         }
 
-        allArticles = await response.json();
+        const iniContent = await response.text();
+        allArticles = parseINI(iniContent);
 
-        // 渲染最新的一篇文章
+        // 渲染文章卡片
         renderArticles(allArticles, false);
       } catch (error) {
         console.error('Error loading articles:', error);
