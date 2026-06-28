@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正切工作室 | Tangent Studio</title>
+  <meta name="description" content="正切工作室 - 专注AI技术与创新解决方案">
+  <link rel="icon" type="image/x-icon" href="icon.ico">
+  <link rel="icon" type="image/jpeg" href="icon.jpg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .dark .glass {
+      background: rgba(17, 24, 39, 0.8);
+    }
+    .hero-gradient {
+      background: radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 60%);
+    }
+    .dark .hero-gradient {
+      background: radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation { animation: float 6s ease-in-out infinite; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 glass border-b border-gray-200/50 dark:border-gray-800/50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <img src="icon.jpg" alt="正切工作室" class="w-8 h-8 rounded-lg object-cover">
+        <span class="font-semibold text-lg" data-i18n="brand">正切工作室</span>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <!-- Language Switcher -->
+        <div class="relative">
+          <button id="langToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Switch Language">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+            </svg>
+          </button>
+          <!-- Indicator Arrow -->
+          <div id="langIndicator" class="absolute -bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+            <svg class="w-3 h-3 text-primary-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] text-primary-500 whitespace-nowrap mt-0.5" data-i18n="switchLang">Switch</span>
+          </div>
+        </div>
+
+        <!-- Theme Switcher -->
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Toggle Theme">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center pt-16 hero-gradient">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <div class="float-animation mb-8">
+        <img src="icon.jpg" alt="正切工作室" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl shadow-primary-500/25 object-cover">
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+        <span class="gradient-text" data-i18n="heroTitle">正切工作室</span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed" data-i18n="heroSubtitle">
+        专注AI技术研究与创新产品开发，致力于用技术创造价值
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://api.tanstudio.me" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-xl font-medium transition-all duration-300 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5">
+          <span data-i18n="ctaButton">访问 AI 中转站</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+
+        <a href="#products"
+           class="inline-flex items-center justify-center gap-2 px-8 py-4 border border-gray-300 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 rounded-xl font-medium transition-all duration-300 hover:-translate-y-0.5">
+          <span data-i18n="learnMore">了解更多</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n="productsTitle">我们的产品</h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto" data-i18n="productsSubtitle">
+          专注于人工智能领域的创新产品，为用户提供优质的技术服务
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Product 1 -->
+        <div class="group p-8 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1">
+          <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/25">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3" data-i18n="product1Title">AI 中转站</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed" data-i18n="product1Desc">
+            统一自适应接口，聚合全球主流AI模型，配置简单，使用便捷，为开发者提供一站式AI服务接入方案。
+          </p>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="group p-8 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-purple-500/25">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3" data-i18n="product2Title">正切实验室</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed" data-i18n="product2Desc">
+            探索前沿AI技术，进行深度研究与实验，推动人工智能技术的创新与应用。
+          </p>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="group p-8 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1">
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3" data-i18n="product3Title">技术服务</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed" data-i18n="product3Desc">
+            提供专业的技术咨询与定制开发服务，帮助企业实现数字化转型与智能化升级。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-24 px-6 bg-gray-50 dark:bg-gray-900/50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n="featuresTitle">为什么选择我们</h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto" data-i18n="featuresSubtitle">
+          我们致力于提供最优质的技术服务体验
+        </p>
+      </div>
+
+      <!-- Articles Container -->
+      <div id="articlesContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 动态加载的卡片会在这里 -->
+      </div>
+
+      <!-- 查看全部按钮 -->
+      <div id="showAllContainer" class="text-center mt-12 hidden">
+        <button id="showAllBtn" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors">
+          <span data-i18n="viewAllCards">查看全部卡片</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links Section -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n="linksTitle">友情链接</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-12" data-i18n="linksSubtitle">
+        探索更多优质资源
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="https://www.qqxxzz.com" target="_blank" rel="noopener noreferrer"
+           class="group flex items-center gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-lg" data-i18n="link1Title">全球学校组织</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="link1Desc">www.qqxxzz.com</p>
+          </div>
+          <svg class="w-5 h-5 ml-auto text-gray-400 group-hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+
+        <a href="https://tangentlab.cn" target="_blank" rel="noopener noreferrer"
+           class="group flex items-center gap-4 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-500 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+          </div>
+          <div class="text-left">
+            <h3 class="font-semibold text-lg" data-i18n="link2Title">正切实验室</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="link2Desc">tangentlab.cn</p>
+          </div>
+          <svg class="w-5 h-5 ml-auto text-gray-400 group-hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 border-t border-gray-200 dark:border-gray-800">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-sm">T</span>
+        </div>
+        <span class="font-semibold" data-i18n="brand">正切工作室</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="copyright">
+        © 2024 正切工作室 All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // i18n Translations
+    const translations = {
+      zh: {
+        brand: '正切工作室',
+        heroTitle: '正切工作室',
+        heroSubtitle: '专注AI技术研究与创新产品开发，致力于用技术创造价值',
+        ctaButton: '访问 AI 中转站',
+        learnMore: '了解更多',
+        productsTitle: '我们的产品',
+        productsSubtitle: '专注于人工智能领域的创新产品，为用户提供优质的技术服务',
+        product1Title: 'AI 中转站',
+        product1Desc: '统一自适应接口，聚合全球主流AI模型，配置简单，使用便捷，为开发者提供一站式AI服务接入方案。',
+        product2Title: '正切实验室',
+        product2Desc: '探索前沿AI技术，进行深度研究与实验，推动人工智能技术的创新与应用。',
+        product3Title: '技术服务',
+        product3Desc: '提供专业的技术咨询与定制开发服务，帮助企业实现数字化转型与智能化升级。',
+        featuresTitle: '为什么选择我们',
+        featuresSubtitle: '我们致力于提供最优质的技术服务体验',
+        viewAllCards: '查看全部卡片',
+        collapseCards: '收起卡片',
+        linksTitle: '友情链接',
+        linksSubtitle: '探索更多优质资源',
+        link1Title: '全球学校组织',
+        link1Desc: 'www.qqxxzz.com',
+        link2Title: '正切实验室',
+        link2Desc: 'tangentlab.cn',
+        copyright: '© 2024 正切工作室 All Rights Reserved.',
+        loading: '加载中...',
+        switchLang: 'Switch Language'
+      },
+      en: {
+        brand: 'Tangent Studio',
+        heroTitle: 'Tangent Studio',
+        heroSubtitle: 'Focused on AI technology research and innovative product development, committed to creating value through technology',
+        ctaButton: 'Visit AI Relay Station',
+        learnMore: 'Learn More',
+        productsTitle: 'Our Products',
+        productsSubtitle: 'Innovative products in the field of artificial intelligence, providing quality technical services',
+        product1Title: 'AI Relay Station',
+        product1Desc: 'Unified adaptive interface, aggregating global mainstream AI models, simple configuration, easy to use, providing one-stop AI service access for developers.',
+        product2Title: 'Tangent Lab',
+        product2Desc: 'Exploring cutting-edge AI technology, conducting in-depth research and experiments, promoting innovation and application of AI technology.',
+        product3Title: 'Technical Services',
+        product3Desc: 'Providing professional technical consulting and custom development services to help enterprises achieve digital transformation and intelligent upgrading.',
+        featuresTitle: 'Why Choose Us',
+        featuresSubtitle: 'We are committed to providing the best technical service experience',
+        viewAllCards: 'View All Cards',
+        collapseCards: 'Collapse Cards',
+        linksTitle: 'Friendly Links',
+        linksSubtitle: 'Explore more quality resources',
+        link1Title: 'Global School Organization',
+        link1Desc: 'www.qqxxzz.com',
+        link2Title: 'Tangent Lab',
+        link2Desc: 'tangentlab.cn',
+        copyright: '© 2024 Tangent Studio All Rights Reserved.',
+        loading: 'Loading...',
+        switchLang: '切换语言'
+      }
+    };
+
+    // Language Management
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function updateLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    // Theme Management
+    function getThemePreference() {
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    // Initialize
+    setTheme(getThemePreference());
+    updateLanguage(currentLang || 'en');
+
+    // Event Listeners
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const current = localStorage.getItem('theme') || getThemePreference();
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      updateLanguage(currentLang === 'zh' ? 'en' : 'zh');
+      // 隐藏语言切换指示器
+      const indicator = document.getElementById('langIndicator');
+      if (indicator) {
+        indicator.style.transition = 'opacity 0.3s, transform 0.3s';
+        indicator.style.opacity = '0';
+        indicator.style.transform = 'translate(-50%, -5px)';
+        setTimeout(() => indicator.style.display = 'none', 300);
+      }
+    });
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+
+    // Articles Management
+    let allArticles = [];
+    let showingAll = false;
+
+    // 创建卡片 HTML
+    function createArticleCard(article, index) {
+      const colors = [
+        'from-blue-500 to-cyan-500',
+        'from-purple-500 to-pink-500',
+        'from-amber-500 to-orange-500',
+        'from-green-500 to-emerald-500',
+        'from-rose-500 to-red-500',
+        'from-indigo-500 to-violet-500'
+      ];
+      const colorClass = colors[index % colors.length];
+
+      return `
+        <div class="group p-8 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1">
+          <div class="w-14 h-14 bg-gradient-to-br ${colorClass} rounded-xl flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">${article.name}</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">${article.content}</p>
+        </div>
+      `;
+    }
+
+    // 渲染卡片
+    function renderArticles(articles, showAll = false) {
+      const container = document.getElementById('articlesContainer');
+      const showAllContainer = document.getElementById('showAllContainer');
+      const showAllBtn = document.getElementById('showAllBtn');
+
+      if (!container) return;
+
+      // 排序：按 num 降序
+      const sortedArticles = [...articles].sort((a, b) => b.num - a.num);
+
+      // 显示的卡片
+      let displayArticles;
+      if (showAll || sortedArticles.length <= 3) {
+        displayArticles = sortedArticles;
+        showAllContainer?.classList.add('hidden');
+      } else {
+        displayArticles = sortedArticles.slice(0, 3);
+        showAllContainer?.classList.remove('hidden');
+      }
+
+      // 渲染卡片
+      container.innerHTML = displayArticles.map((article, index) =>
+        createArticleCard(article, index)
+      ).join('');
+
+      // 更新按钮文本
+      if (showAllBtn) {
+        const btnText = showAllBtn.querySelector('[data-i18n]');
+        if (btnText) {
+          btnText.setAttribute('data-i18n', showAll ? 'collapseCards' : 'viewAllCards');
+          btnText.textContent = translations[currentLang][showAll ? 'collapseCards' : 'viewAllCards'];
+        }
+      }
+    }
+
+    // 加载文章
+    async function loadArticles() {
+      const container = document.getElementById('articlesContainer');
+      if (!container) return;
+
+      // 显示加载状态
+      container.innerHTML = `
+        <div class="col-span-full text-center py-12">
+          <div class="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400">
+            <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span data-i18n="loading">${translations[currentLang].loading}</span>
+          </div>
+        </div>
+      `;
+
+      try {
+        // 根据当前语言选择 API
+        const apiUrl = currentLang === 'zh' ? '/api/articles' : '/api/articles/en';
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          throw new Error('Failed to load articles');
+        }
+
+        allArticles = await response.json();
+
+        // 渲染最新的一篇文章
+        renderArticles(allArticles, false);
+      } catch (error) {
+        console.error('Error loading articles:', error);
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+            <p>无法加载文章内容</p>
+          </div>
+        `;
+      }
+    }
+
+    // 切换显示全部/收起
+    function toggleShowAll() {
+      showingAll = !showingAll;
+      renderArticles(allArticles, showingAll);
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      // 加载文章
+      loadArticles();
+
+      // 绑定按钮事件
+      const showAllBtn = document.getElementById('showAllBtn');
+      if (showAllBtn) {
+        showAllBtn.addEventListener('click', toggleShowAll);
+      }
+    });
+
+    // 语言切换时重新加载文章
+    const originalUpdateLanguage = updateLanguage;
+    updateLanguage = function(lang) {
+      originalUpdateLanguage(lang);
+      loadArticles();
+    };
+  </script>
+</body>
+</html>
